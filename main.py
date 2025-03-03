@@ -2,6 +2,8 @@
 # the open-source pygame library
 # throughout this file
 import pygame
+import os
+import sys
 from constants import *
 from player import Player
 from asteroid import Asteroid
@@ -13,8 +15,11 @@ pygame.init()
 
 # Display Screen
 screen = pygame.display.set_mode((1280, 800))
-pygame.display.set_caption("My Pygame Window")
+pygame.display.set_caption("Asterioids")
 black = (0, 0, 0)
+
+# Background Image
+background = pygame.image.load(os.path.join("backgroundSpace.jpg"))
 
 # Delta Time
 clock = pygame.time.Clock() # Create an instance of the Clock object
@@ -55,7 +60,9 @@ while running:
         if event.type == pygame.QUIT:
             running = False
     
-    pygame.Surface.fill(screen, black)
+    # add the background image
+    screen.blit(background, (0, 0))
+
 
     # Update everything
     updatable.update(dt)
@@ -65,10 +72,11 @@ while running:
     for draws in drawable:
         draws.draw(screen)
 
+    # Draw shots
     for shot in shots:
         shot.draw(screen)
 
-    print(f'Number of shots: {len(shots)}')
+    # print(f'Number of shots: {len(shots)}')
 
     pygame.display.flip()
 
