@@ -3,11 +3,14 @@ from circleshape import CircleShape
 from constants import *
 from shot import Shot
 
+
+
 class Player(CircleShape):
     def __init__(self, x, y, shots_group):
         super().__init__(x, y, PLAYER_RADIUS)
         self.rotation = 0
         self.shots_group = shots_group # store the shots group in the player class
+        self.shotTimer = 0 # Initialize the shot timer to 0
         
     
     # in the player class
@@ -39,9 +42,13 @@ class Player(CircleShape):
 
         if keys[pygame.K_s]:
             self.move(-dt)
+
+        if self.shotTimer > 0:
+            self.shotTimer -= dt
         
-        if keys[pygame.K_SPACE]:
+        if keys[pygame.K_SPACE] and self.shotTimer <= 0:
             self.shoot()
+            self.shotTimer = PLAYER_SHOOT_COOLDOWN
 
     def move(self, dt):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
@@ -59,8 +66,11 @@ class Player(CircleShape):
 
         # add the shot to the shots group
         self.shots_group.add(shot)
-
         print("Pew! Pew!")
+        
+
+    
+
 
         
 

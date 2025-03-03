@@ -71,14 +71,22 @@ while running:
     print(f'Number of shots: {len(shots)}')
 
     pygame.display.flip()
-    
+
     for asteroid in asteroids:
         if player.collisionDetect(asteroid):
             print("Game Over!")
             running = False
 
+    for asteroid in asteroids:
+        for shot in shots:
+            if shot.collisionDetect(asteroid):
+                shot.kill()
+                asteroid.split()
+                print("Asteroid Shot!")
 
     dt = clock.tick(60) / 1000
+
+
     
     
 
