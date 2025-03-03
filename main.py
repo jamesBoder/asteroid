@@ -15,8 +15,24 @@ pygame.init()
 
 # Display Screen
 screen = pygame.display.set_mode((1280, 800))
-pygame.display.set_caption("Asterioids")
+pygame.display.set_caption("Asteroids")
+
+# Colors
+white = (255, 255, 255)
 black = (0, 0, 0)
+
+# Font
+font = pygame.font.Font(None, 36)
+
+# Player Score
+playerScore = 0
+
+
+# Function to display score
+def showScore():
+    score = font.render(f"Score: {playerScore}", True, white)
+    screen.blit(score, (10, 10))
+
 
 # Background Image
 background = pygame.image.load(os.path.join("backgroundSpace.jpg"))
@@ -63,6 +79,8 @@ while running:
     # add the background image
     screen.blit(background, (0, 0))
 
+    # Show the score
+    showScore()
 
     # Update everything
     updatable.update(dt)
@@ -90,6 +108,7 @@ while running:
             if shot.collisionDetect(asteroid):
                 shot.kill()
                 asteroid.split()
+                playerScore += 1
                 print("Asteroid Shot!")
 
     dt = clock.tick(60) / 1000
